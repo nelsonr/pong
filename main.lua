@@ -16,7 +16,7 @@ function love.draw()
 	pad.draw(padRight, padRight.color)
 
 	-- draw ball
-	ball.draw()
+	if gamestate == 'playing' then ball.draw() end
 
 	-- draw gameover message
 	if gamestate == 'gameover' then
