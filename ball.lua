@@ -1,19 +1,27 @@
 ball = {}
 
+local function center_ball_x()
+	return (love.window.getWidth() / 2) - (ball.width / 2)
+end
+
+local function center_ball_y()
+	return (love.window.getHeight() / 2) - (ball.height / 2)
+end
+
 function ball.draw()
 	love.graphics.draw(ball.image, ball.x, ball.y)
 end
 
 function ball.reset()
-	ball.x = (love.window.getWidth() / 2) - (ball.width / 2)
-	ball.y = (love.window.getHeight() / 2) - (ball.height / 2)
+	ball.x = center_ball_x()
+	ball.y = center_ball_y()
 end
 
 function ball.load()
 	ball.width = 15
 	ball.height = 15
-	ball.x = (love.window.getWidth() / 2) - (ball.width / 2)
-	ball.y = (love.window.getHeight() / 2) - (ball.height / 2)
+	ball.x = center_ball_x()
+	ball.y = center_ball_y()
 	ball.speed = 200
 	ball.yVelocity = ball.speed
 	ball.xDirection = 1
