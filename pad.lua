@@ -19,12 +19,14 @@ end
 
 function pad.draw(pad)
 	-- pad zone
-	love.graphics.setColor(240, 240, 240)
-	love.graphics.rectangle('fill', pad.x, 0, pad.width, love.window.getHeight())
+	--love.graphics.setColor(240, 240, 240)
+	--love.graphics.rectangle('fill', pad.x, 0, pad.width / 2, love.window.getHeight())
 
 	-- pad
-	love.graphics.setColor(pad.color.r, pad.color.g, pad.color.b)
-	love.graphics.rectangle('fill', pad.x, pad.y, pad.width, pad.height)
+	--love.graphics.setColor(pad.color.r, pad.color.g, pad.color.b)
+	--love.graphics.rectangle('fill', pad.x, pad.y, pad.width, pad.height)
+	love.graphics.setColor(255,255,255)
+	love.graphics.draw(pad.image, pad.x, pad.y)
 end
 
 function pad.move(pad, dt)
@@ -49,8 +51,8 @@ end
 function pad.create()
 	local pad = {}
 
-	pad.width = 15
-	pad.height = 70
+	pad.width = 61
+	pad.height = 106
 	pad.x = 0
 	pad.y = 0
 	pad.speed = 200
@@ -79,11 +81,13 @@ function pad.setup()
 	left.color = {r=75, g=75, b=255} -- blue
 	left.upKey = 'w'
 	left.downKey = 's'
+	left.image = love.graphics.newImage('images/blue.png')
 
 	-- right pad
 	right = pad.create()
 	right.bounceDirection = -1
 	right.color = {r=255, g=75, b=75} -- red
+	right.image = love.graphics.newImage('images/red.png')
 
 	return left, right
 end
