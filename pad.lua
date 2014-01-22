@@ -18,13 +18,7 @@ local function move_down(pad, dt)
 end
 
 function pad.draw(pad)
-	-- pad zone
-	--love.graphics.setColor(240, 240, 240)
-	--love.graphics.rectangle('fill', pad.x, 0, pad.width / 2, love.window.getHeight())
-
 	-- pad
-	--love.graphics.setColor(pad.color.r, pad.color.g, pad.color.b)
-	--love.graphics.rectangle('fill', pad.x, pad.y, pad.width, pad.height)
 	love.graphics.setColor(255,255,255)
 	love.graphics.draw(pad.image, pad.x, pad.y)
 end
@@ -37,7 +31,9 @@ function pad.move(pad, dt)
 end
 
 function pad.ai(pad, ball, dt)
-	if ball.x < love.window.getWidth() / 2 and ball.xDirection == -1 then
+	if (pad.x == 0 and ball.xDirection == -1) 
+	or (pad.x > 0 and ball.xDirection == 1) then
+
 		if ball.y < pad.y then 
 			move_up(pad, dt)		
 		end	
@@ -55,7 +51,7 @@ function pad.create()
 	pad.height = 106
 	pad.x = 0
 	pad.y = 0
-	pad.speed = 200
+	pad.speed = 400
 	pad.bounceDirection = 1
 	pad.color = {r=255, g=255, b=255}
 	pad.upKey = 'up'
@@ -78,7 +74,7 @@ function pad.setup()
 
 	-- left pad
 	left = pad.create()
-	left.color = {r=75, g=75, b=255} -- blue
+	--left.color = {r=75, g=75, b=255} -- blue
 	left.upKey = 'w'
 	left.downKey = 's'
 	left.image = love.graphics.newImage('images/blue.png')
@@ -86,7 +82,7 @@ function pad.setup()
 	-- right pad
 	right = pad.create()
 	right.bounceDirection = -1
-	right.color = {r=255, g=75, b=75} -- red
+	--right.color = {r=255, g=75, b=75} -- red
 	right.image = love.graphics.newImage('images/red.png')
 
 	return left, right

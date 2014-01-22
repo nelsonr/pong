@@ -22,7 +22,7 @@ function ball.load()
 	ball.height = 15
 	ball.x = center_ball_x()
 	ball.y = center_ball_y()
-	ball.speed = 200
+	ball.speed = 300
 	ball.yVelocity = ball.speed
 	ball.xDirection = 1
 	ball.image = love.graphics.newImage('images/puck.png')
@@ -33,7 +33,8 @@ function ball.move(dt)
 	ball.y = ball.y + (ball.yVelocity * dt)
 
 	-- invert direction when reaches boundaries
-	if ball.y < 0 or (ball.y + ball.height) > love.window.getHeight() then
+	-- TODO: fix issue of balling getting stuck in the boundaries
+	if ball.y < 0 or (ball.y + ball.height) >= love.window.getHeight() then
 		ball.yVelocity = -ball.yVelocity
 	end
 

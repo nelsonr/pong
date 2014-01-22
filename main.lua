@@ -29,7 +29,7 @@ function love.update(dt)
 	if gamestate == 'playing' then
 		-- update pads
 		pad.ai(padLeft, ball, dt)
-		pad.move(padRight, dt)
+		pad.ai(padRight, ball, dt)
 
 		-- update ball
 		ball.move(dt)
@@ -55,7 +55,7 @@ function love.update(dt)
 end
 
 function love.load()
-	love.window.setTitle('Super Master Pong')
+	love.window.setTitle('Super Hockey Pong')
 	love.window.setMode(640, 480)
 
 	love.graphics.setFont(love.graphics.newFont(30))
