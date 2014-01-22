@@ -4,6 +4,7 @@ padLeft, padRight = {}, {}
 local function move_up(pad, dt)
 	pad.y = pad.y - (pad.speed * dt)
 	
+	-- set top boundary
 	if pad.y < 0 then pad.y = 0 end
 end
 

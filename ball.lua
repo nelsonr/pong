@@ -15,22 +15,18 @@ function ball.load()
 	ball.x = (love.window.getWidth() / 2) - (ball.width / 2)
 	ball.y = (love.window.getHeight() / 2) - (ball.height / 2)
 	ball.speed = 200
+	ball.yVelocity = ball.speed
 	ball.xDirection = 1
-	ball.yDirection = -1
 	ball.image = love.graphics.newImage('images/puck.png')
 end
 
-function ball.move(delta)
-	ball.x = ball.x + (ball.speed * delta) * ball.xDirection
-	ball.y = ball.y + (ball.speed * delta) * ball.yDirection
+function ball.move(dt)
+	ball.x = ball.x + (ball.speed * dt) * ball.xDirection
+	ball.y = ball.y + (ball.yVelocity * dt)
 
 	-- invert direction when reaches boundaries
-	if (ball.y + ball.height) > love.window.getHeight() then
-		ball.yDirection = -1
-	end
-
-	if ball.y < 0 then
-		ball.yDirection = 1
+	if ball.y < 0 or (ball.y + ball.height) > love.window.getHeight() then
+		ball.yVelocity = -ball.yVelocity
 	end
 
 	return ball
