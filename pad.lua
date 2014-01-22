@@ -11,15 +11,15 @@ function pad.draw(pad)
 	love.graphics.rectangle('fill', pad.x, pad.y, pad.width, pad.height)
 end
 
-function pad.move(pad, delta)
+function pad.move(pad, dt)
 	if love.keyboard.isDown(pad.upKey) then
-		pad.y = pad.y - (pad.speed * delta)
+		pad.y = pad.y - (pad.speed * dt)
 
 		if pad.y < 0 then pad.y = 0 end -- set top boundary
 	end
 
 	if love.keyboard.isDown(pad.downKey) then
-		pad.y = pad.y + (pad.speed * delta)
+		pad.y = pad.y + (pad.speed * dt)
 
 		-- set bottom boundary
 		if (pad.y + pad.height) > love.window.getHeight() then
@@ -30,6 +30,25 @@ function pad.move(pad, delta)
 	return pad
 end
 
+function pad.ai(pad, ball, dt)
+	if ball.x < love.window.getWidth() / 2 and ball.xDirection == -1 then
+		if ball.y < pad.y then 
+			pad.y = pad.y - (pad.speed * dt)
+
+			if pad.y < 0 then pad.y = 0 end
+		end	
+
+		if ball.y + ball.height > pad.y + pad.height then
+			pad.y = pad.y + (pad.speed * dt)
+
+			-- set bottom boundary
+			if (pad.y + pad.height) > love.window.getHeight() then
+				pad.y = love.window.getHeight() - pad.height		
+			end
+		end
+	end
+end
+
 function pad.create()
 	local pad = {}
 
@@ -37,7 +56,7 @@ function pad.create()
 	pad.height = 70
 	pad.x = 0
 	pad.y = 0
-	pad.speed = 300
+	pad.speed = 200
 	pad.bounceDirection = 1
 	pad.color = {r=255, g=255, b=255}
 	pad.upKey = 'up'

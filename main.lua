@@ -28,7 +28,7 @@ end
 function love.update(dt)
 	if gamestate == 'playing' then
 		-- update pads
-		pad.move(padLeft, dt)
+		pad.ai(padLeft, ball, dt)
 		pad.move(padRight, dt)
 
 		-- update ball
@@ -57,7 +57,7 @@ end
 function love.load()
 	love.window.setTitle('Super Master Pong')
 	love.window.setMode(640, 480)
-	
+
 	love.graphics.setFont(love.graphics.newFont(30))
 
 	field.load()

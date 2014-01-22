@@ -10,14 +10,15 @@ function score.draw()
 end
 
 function score.watch(ball)
-	if ball.x < 0 then 
-		playerB.score = playerB.score + 1 
-		ball.reset()
-		ball.speed = ball.speed + 10
-	end
+	if ball.x < 0 or ball.x > love.window.getWidth() then 
+		if ball.x < 0 then 
+			playerB.score = playerB.score + 1 
+		end
 
-	if ball.x > love.window.getWidth() then 
-		playerA.score = playerA.score + 1 
+		if ball.x > love.window.getWidth() then 
+			playerA.score = playerA.score + 1 
+		end
+
 		ball.reset()
 		ball.speed = ball.speed + 10
 	end
