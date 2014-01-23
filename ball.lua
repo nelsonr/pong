@@ -13,6 +13,7 @@ function ball.draw()
 end
 
 function ball.reset()
+	ball.yVelocity = ball.speed * (0.02 * math.random(20, -20))
 	ball.x = center_ball_x()
 	ball.y = center_ball_y()
 end
@@ -33,9 +34,12 @@ function ball.move(dt)
 	ball.y = ball.y + (ball.yVelocity * dt)
 
 	-- invert direction when reaches boundaries
-	-- TODO: fix issue of balling getting stuck in the boundaries
-	if ball.y < 0 or (ball.y + ball.height) >= love.window.getHeight() then
-		ball.yVelocity = -ball.yVelocity
+	if ball.y < 0 then
+		ball.yVelocity = math.abs(ball.yVelocity)
+	end
+
+	if (ball.y + ball.height) >= love.window.getHeight() then
+		ball.yVelocity = -math.abs(ball.yVelocity)
 	end
 
 	return ball
