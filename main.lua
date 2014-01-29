@@ -185,7 +185,7 @@ function love.keypressed(key)
 		end
 	end
 
-	if gamestate == 'playing' and key == 'escape' then
+	if gamestate == 'playing' or gamestate == 'paused' and key == 'escape' then
 		love.load()
 	end
 end
