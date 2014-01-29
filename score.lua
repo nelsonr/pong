@@ -25,18 +25,17 @@ function score.watch(ball)
 end
 
 function score.load()
-	playerA.name = 'Blue'
+	playerA.win_image = love.graphics.newImage('images/blue_wins.png')
 	playerA.score = 0
 	
-	playerB.name = 'Red'
+	playerB.win_image = love.graphics.newImage('images/red_wins.png')
 	playerB.score = 0
 end
 
 function score.gameover(player)
 	local centerX = love.graphics.getWidth() / 2
 	local centerY = love.graphics.getHeight() / 2
-	local message = player.name .. ' Wins!'
-
-	love.graphics.setColor(30, 30, 30)
-	love.graphics.printf(message, centerX - 100, centerY - 25, 200, 'center')
+	local x = (love.window.getWidth() / 2) - (player.win_image:getWidth() / 2)
+	
+	love.graphics.draw(player.win_image, x, 150)
 end

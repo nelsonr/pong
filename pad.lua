@@ -34,11 +34,11 @@ function pad.ai(pad, ball, dt)
 	if (pad.x == 0 and ball.xDirection == -1) 
 	or (pad.x > 0 and ball.xDirection == 1) then
 
-		if ball.y < pad.y then 
-			move_up(pad, dt)		
+		if ball.y < pad.y + pad.height / 3 then 
+			move_up(pad, dt)		 
 		end	
 
-		if ball.y + ball.height > pad.y + pad.height then
+		if ball.y + ball.height > pad.y + pad.height / 3 then
 			move_down(pad, dt)
 		end
 	end
@@ -51,7 +51,7 @@ function pad.create()
 	pad.height = 106
 	pad.x = 0
 	pad.y = 0
-	pad.speed = 400
+	pad.speed = 320
 	pad.bounceDirection = 1
 	pad.color = {r=255, g=255, b=255}
 	pad.upKey = 'up'
