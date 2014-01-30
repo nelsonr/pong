@@ -6,7 +6,7 @@ local score     = require 'score'
 local menu      = require 'menu'
 local ball      = require 'ball'
 
-local gamestate, center_x, center_y
+local gamestate, gamemode, center_x
 
 function love.load()
     love.window.setMode(640, 480)
@@ -14,7 +14,6 @@ function love.load()
     love.graphics.setFont(love.graphics.setNewFont(20))
 
     center_x = love.window.getWidth() / 2
-    --center_y = love.window.getHeight() / 2
 
     field.load()
     pad.load()
@@ -25,79 +24,28 @@ function love.load()
     gamestate = 'title'
 end
 
--- Game Modes
-local game = {
-    mode = 'p1_vs_cpu',
-
-    -- Player VS CPU
-    p1_vs_cpu = {
-        settings = function() end,
-
-        loop = function(dt)
-            pad.move(padLeft, dt)
-            pad.ai(padRight, ball, dt)
-        end
-    },
-
-    -- Player VS Player
-    p1_vs_p2 = {
-        settings = function() end,
-
-        loop = function(dt)
-            pad.move(padLeft, dt)
-            pad.move(padRight, dt)
-        end
-    },
-
-    -- CPU VS CPU
-    cpu_vs_cpu = {
-        settings = function()
-            ball.speed = 1200
-            padLeft.speed = 800
-            padRight.speed = 800
-        end,
-
-        loop = function(dt)
-            pad.ai(padLeft, ball, dt)
-            pad.ai(padRight, ball, dt)
-        end
-    }
-}
-
--- Game start
-function game.start()
-    pad.load()
-    ball.load()
-    score.load()
-
-    -- load game mode settings
-    game[game.mode].settings()
-
-    gamestate = 'playing'
-end
-
 -- Game Menus
 local title_menu = menu.create('title', {
     {
         label = 'Player vs Player',
-        callback = function() 
-            game.mode = 'p1_vs_p2' 
-            game.start()
+        callback = function()
+            gamemode = 'p1_vs_p2'
+            gamestart()
         end
     },
     {
         label = 'Player vs CPU',
-        callback = function() 
-            game.mode = 'p1_vs_cpu' 
-            game.start()
-        end 
+        callback = function()
+            gamemode = 'p1_vs_cpu'
+            gamestart()
+        end
     },
     {
         label = 'CPU vs CPU',
-        callback = function() 
-            game.mode = 'cpu_vs_cpu'
-            game.start()
-        end 
+        callback = function()
+            gamemode = 'cpu_vs_cpu'
+            gamestart()
+        end
     },
     {
         label = 'Exit',
@@ -107,14 +55,51 @@ local title_menu = menu.create('title', {
 
 local gameover_menu = menu.create('gameover', {
     {
-        label = 'Play again?', 
-        callback = function() game.start() end
+        label = 'Play again?',
+        callback = function() gamestart() end
     },
     {
-        label = 'Back to title', 
+        label = 'Back to title',
         callback = function() love.load() end
     }
 })
+
+-- Game Modes
+local mode = {}
+
+-- Player VS CPU
+mode.p1_vs_cpu = {
+    settings = function() end,
+
+    loop = function(dt)
+        pad.move(padLeft, dt)
+        pad.ai(padRight, ball, dt)
+    end
+}
+
+-- Player VS Player
+mode.p1_vs_p2 = {
+    settings = function() end,
+
+    loop = function(dt)
+        pad.move(padLeft, dt)
+        pad.move(padRight, dt)
+    end
+}
+
+-- CPU VS CPU
+mode.cpu_vs_cpu = {
+    settings = function()
+        ball.speed = 1200
+        padLeft.speed = 800
+        padRight.speed = 800
+    end,
+
+    loop = function(dt)
+        pad.ai(padLeft, ball, dt)
+        pad.ai(padRight, ball, dt)
+    end
+}
 
 -- Game Screens
 local screen = {}
@@ -155,6 +140,18 @@ function screen.gameover()
     menu.draw(gameover_menu, center_x - 90, 250)
 end
 
+-- Game Start
+function gamestart()
+    pad.load()
+    ball.load()
+    score.load()
+
+    -- load game mode settings
+    mode[gamemode].settings()
+
+    gamestate = 'playing'
+end
+
 -- Game Loop
 function love.draw()
     -- field
@@ -167,7 +164,7 @@ end
 function love.update(dt)
     if gamestate == 'playing' then
         -- mode specific updates
-        game[game.mode].loop(dt)
+        mode[gamemode].loop(dt)
 
         -- update ball
         ball.update(dt)
