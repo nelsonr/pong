@@ -6,3 +6,6 @@ build/
 
 # Assets folder
 assets/
+
+# IDE folder
+.idea/
