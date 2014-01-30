@@ -8,22 +8,6 @@ local ball      = require 'ball'
 
 local gamestate, gamemode, center_x
 
-function love.load()
-    love.window.setMode(640, 480)
-    love.window.setTitle('Super Hockey Pong')
-
-    center_x = love.window.getWidth() / 2
-
-    field.load()
-    pad.load()
-    ball.load()
-    score.load()
-    title.load()
-    menu.load()
-
-    gamestate = 'title'
-end
-
 -- Game Menus
 local title_menu = menu.create('title', {
     {
@@ -104,12 +88,12 @@ mode.cpu_vs_cpu = {
 -- Game Screens
 local screen = {}
 
-function screen.title()
+screen.title = function()
     title.draw()
     menu.draw(title_menu, center_x - 90, 250)
 end
 
-function screen.playing()
+screen.playing = function()
     -- score
     score.draw()
     
@@ -124,7 +108,7 @@ end
 -- for now the paused screen is the same as the playing screen
 screen.paused = screen.playing
 
-function screen.gameover()
+screen.gameover = function()
     -- score
     score.draw()
     
@@ -138,6 +122,21 @@ function screen.gameover()
 
     -- menu
     menu.draw(gameover_menu, center_x - 90, 250)
+end
+
+-- Load all the things!
+function love.load()
+    love.window.setMode(640, 480)
+    love.window.setTitle('Super Hockey Pong')
+
+    center_x = love.window.getWidth() / 2
+
+    field.load()
+    ball.load()
+    title.load()
+    menu.load()
+
+    gamestate = 'title'
 end
 
 -- Game Start
