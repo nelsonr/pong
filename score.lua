@@ -1,9 +1,12 @@
 local score = {}
+local font
+
 playerA, playerB = {}, {}
 
 function score.draw()
     local centerX = love.window.getWidth() / 2
 
+    love.graphics.setFont(font)
     love.graphics.setColor(30, 30, 30)
     love.graphics.printf(playerA.score, centerX - 60, 15, 45, 'center')
     love.graphics.print(playerB.score, centerX + 30, 15)
@@ -25,6 +28,8 @@ function score.watch(ball)
 end
 
 function score.load()
+   font = love.graphics.setNewFont(30)
+
     playerA.win_image = love.graphics.newImage('images/blue_wins.png')
     playerA.score = 0
     

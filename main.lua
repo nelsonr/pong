@@ -11,7 +11,6 @@ local gamestate, gamemode, center_x
 function love.load()
     love.window.setMode(640, 480)
     love.window.setTitle('Super Hockey Pong')
-    love.graphics.setFont(love.graphics.setNewFont(20))
 
     center_x = love.window.getWidth() / 2
 
@@ -20,6 +19,7 @@ function love.load()
     ball.load()
     score.load()
     title.load()
+    menu.load()
 
     gamestate = 'title'
 end

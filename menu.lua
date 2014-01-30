@@ -1,4 +1,5 @@
 local menu = {}
+local font
 
 function menu.draw(menu, x, y, font_size)
     local padding = 10
@@ -7,6 +8,7 @@ function menu.draw(menu, x, y, font_size)
     local spacing = font_size
     local height = font_size * 1.6
 
+    love.graphics.setFont(font)
     love.graphics.setColor(0,0,0)
 
     for i, item in pairs(menu.body) do
@@ -50,6 +52,10 @@ function menu.create(state, body)
         state = state, -- in which gamestate the menu should be visible
         body = body
     }
+end
+
+function menu.load()
+    font = love.graphics.setNewFont(20)
 end
 
 return menu
