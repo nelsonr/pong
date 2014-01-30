@@ -71,7 +71,7 @@ local mode = {}
 mode.p1_vs_cpu = {
     settings = function() end,
 
-    loop = function(dt)
+    update = function(dt)
         pad.move(padLeft, dt)
         pad.ai(padRight, ball, dt)
     end
@@ -81,7 +81,7 @@ mode.p1_vs_cpu = {
 mode.p1_vs_p2 = {
     settings = function() end,
 
-    loop = function(dt)
+    update = function(dt)
         pad.move(padLeft, dt)
         pad.move(padRight, dt)
     end
@@ -95,7 +95,7 @@ mode.cpu_vs_cpu = {
         padRight.speed = 800
     end,
 
-    loop = function(dt)
+    update = function(dt)
         pad.ai(padLeft, ball, dt)
         pad.ai(padRight, ball, dt)
     end
@@ -164,7 +164,7 @@ end
 function love.update(dt)
     if gamestate == 'playing' then
         -- mode specific updates
-        mode[gamemode].loop(dt)
+        mode[gamemode].update(dt)
 
         -- update ball
         ball.update(dt)
